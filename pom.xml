@@ -1,0 +1,90 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>net.alcyon</groupId>
+  <artifactId>docker-flume</artifactId>
+  <version>0.1-SNAPSHOT</version>
+
+  <url></url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
+
+  <dependencies>
+
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+
+      <plugin>
+        <groupId>com.googlecode.maven-download-plugin</groupId>
+        <artifactId>download-maven-plugin</artifactId>
+        <version>1.2.1</version>
+        <executions>
+          <execution>
+            <id>download-flume</id>
+            <phase>pre-integration-test</phase>
+            <goals><goal>wget</goal></goals>
+            <configuration>
+                <url>http://archive.apache.org/dist/flume/1.6.0/apache-flume-1.6.0-bin.tar.gz</url>
+                <unpack>true</unpack>
+                <outputDirectory>${project.build.directory}/flume</outputDirectory>
+                <md5>defd21ad8d2b6f28cc0a16b96f652099</md5>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.jolokia</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <version>0.11.5</version>
+        <configuration>
+          <images>
+            <image>
+              <name>flume</name>
+              <build>
+                <from>java</from>
+                <maintainer>sbower@alcyon.net</maintainer>
+                <tags>
+                  <tag>latest</tag>
+                  <tag>${project.version}</tag>
+                </tags>
+                <assembly>
+                  <mode>dir</mode>
+                  <basedir>/</basedir>
+                  <descriptor>${basedir}/src/main/assembly/image.xml</descriptor>
+                </assembly>
+              </build>
+            </image>
+          </images>
+        </configuration>
+
+        <executions>
+            <execution>
+              <id>start</id>
+              <phase>pre-integration-test</phase>
+              <goals>
+                <goal>build</goal>
+              </goals>
+            </execution>
+        </executions>
+      </plugin>
+
+
+    </plugins>
+  </build>
+</project>

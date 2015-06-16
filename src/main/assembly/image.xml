@@ -9,7 +9,7 @@
 
   <fileSets>
     <fileSet>
-      <directory>${project.build.directory}/flume/apache-flume-1.6.0-bin</directory>
+      <directory>${project.build.directory}/flume/apache-flume-${flume.version}-bin</directory>
       <outputDirectory>flume</outputDirectory>
     </fileSet>
   </fileSets>

@@ -7,10 +7,10 @@
   <groupId>net.alcyon</groupId>
   <artifactId>docker-flume</artifactId>
   <version>0.1-SNAPSHOT</version>
-
-  <url></url>
+  <packaging>pom</packaging>
 
   <properties>
+    <flume.version>1.6.0</flume.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
@@ -39,7 +39,7 @@
             <phase>pre-integration-test</phase>
             <goals><goal>wget</goal></goals>
             <configuration>
-                <url>http://archive.apache.org/dist/flume/1.6.0/apache-flume-1.6.0-bin.tar.gz</url>
+                <url>http://archive.apache.org/dist/flume/${flume.version}/apache-flume-${flume.version}-bin.tar.gz</url>
                 <unpack>true</unpack>
                 <outputDirectory>${project.build.directory}/flume</outputDirectory>
                 <md5>defd21ad8d2b6f28cc0a16b96f652099</md5>
